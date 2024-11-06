@@ -140,13 +140,8 @@ def register():
         password = request.form['password']
         db = connect_db()
         c = db.cursor()
-        pass_statement = """SELECT * FROM users WHERE password = ?;"""
         user_statement = """SELECT * FROM users WHERE username = ?;"""
-        c.execute(pass_statement, password)
-        if(len(c.fetchall())>0):
-            errored = True
-            passworderror = "That password is already in use by someone else!"
-
+       
         c.execute(user_statement, password)
         if(len(c.fetchall())>0):
             errored = True
