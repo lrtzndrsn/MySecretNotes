@@ -82,8 +82,8 @@ def notes():
             noteid = request.form['noteid']
             db = connect_db()
             c = db.cursor()
-            statement = """SELECT * from NOTES where publicID = %s""" %noteid
-            c.execute(statement)
+            statement = """SELECT * from NOTES where publicID = ?"""
+            c.execute(statement, noteid)
             result = c.fetchall()
             if(len(result)>0):
                 row = result[0]
@@ -134,15 +134,12 @@ def register():
     usererror = ""
     passworderror = ""
     if request.method == 'POST':
-        
-
         username = request.form['username']
         password = request.form['password']
         db = connect_db()
         c = db.cursor()
         user_statement = """SELECT * FROM users WHERE username = ?;"""
-       
-        c.execute(user_statement, password)
+        c.execute(user_statement, (username,))
         if(len(c.fetchall())>0):
             errored = True
             usererror = "That username is already in use by someone else!"
