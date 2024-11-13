@@ -127,6 +127,27 @@ def login():
             error = "Wrong username or password!"
     return render_template('login.html',error=error)
 
+@app.route("/secret_admin_page/", methods=('GET', 'POST'))
+def secretAdmin():
+    error = ""
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        db = connect_db()
+        c = db.cursor()
+        statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';"%(username, password)
+        c.execute(statement)
+        result = c.fetchall()
+
+        if len(result) > 0:
+            session.clear()
+            session['logged_in'] = True
+            session['userid'] = result[0][0]
+            session['username']=result[0][1]
+            return redirect(url_for('index'))
+        else:
+            error = "Wrong username or password!"
+    return render_template('secret_admin_page.html',error=error)
 
 @app.route("/register/", methods=('GET', 'POST'))
 def register():
@@ -147,7 +168,7 @@ def register():
         if(not errored):
             statement = """INSERT INTO users(id,username,password) VALUES(null,?,?);"""
             print(statement)
-            c.execute(statement, (username,password))
+            c.execute(statement, )
             db.commit()
             db.close()
             return f"""<html>
