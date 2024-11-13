@@ -32,10 +32,12 @@ CREATE TABLE users (
     password TEXT NOT NULL
 );
 
-INSERT INTO users VALUES(null,"admin", "password");
+INSERT INTO users VALUES(null,"admin", "19243r0u92ijq0a09uf9d122e+1w+0sdajfi0rej9331");
 INSERT INTO users VALUES(null,"bernardo", "omgMPC");
 INSERT INTO notes VALUES(null,2,"1993-09-23 10:10:10","hello my friend",1234567890);
 INSERT INTO notes VALUES(null,2,"1993-09-23 12:10:10","i want lunch pls",1234567891);
+INSERT INTO notes VALUES(null,1,"2024-10-23 12:10:10","They're eating the dogs, they're eating the cats, they're eating the pets of people that live there",1234567892);
+INSERT INTO notes VALUES(null,1,"2016-01-06 12:10:10","The login was so flawless, even the server started applauding. User: trump Password: fuckme",1234567893);
 
 """)
 
