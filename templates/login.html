@@ -107,10 +107,10 @@
             <div class="container">
               <h1>Please login</h1>
                 <br>
-              <form action="" method="post">
-                <input type="text" placeholder="Username" name="username" value="{{
+              <form id="loginForm" action="" method="post">
+                <input type="text" id="username" placeholder="Username" name="username" value="{{
           request.form.username }}">
-                <input type="password" placeholder="Password" name="password" value="{{
+                <input type="password" id="password" placeholder="Password" name="password" value="{{
           request.form.password }}">
                 <input class="btn-solid-lg" type="submit" value="Login">
               </form>
@@ -131,6 +131,31 @@
 
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1-crypto-js.js"></script>
+  <script>
+  // Function to hash the password
+  function hashPassword(password) {
+      // Hash the password using SHA-256
+      return CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64); // Or .toString(CryptoJS.enc.Hex) for hex encoding
+  }
+  
+  // Attach event listener to form submission
+  document.getElementById("loginForm").onsubmit = function(event) {
+      event.preventDefault();  // Prevent the form from submitting the normal way
+  
+      // Get the password from the input field
+      var passwordInput = document.getElementById('password').value;
+  
+      // Hash the password before sending it to the server
+      var hashedPassword = hashPassword(passwordInput);
+  
+      // Set the hashed password back to the password input field
+      document.getElementById('password').value = hashedPassword;
+  
+      // Now submit the form with the hashed password
+      this.submit();  // Submit the form with the hashed password
+  };
+  </script>
   <script src={{ url_for('static',filename='js/jquery.min.js') }}></script>
   <!-- jQuery for Bootstrap's JavaScript plugins -->
   <script src={{ url_for('static',filename='js/popper.min.js') }}></script>
